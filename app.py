@@ -149,7 +149,7 @@ st.plotly_chart(fig_line, use_container_width=True)
 st.header("WS Changes (Nov - Oct)")
 bar_data = compute_differences(oct_data, nov_data)
 bar_df = pd.DataFrame([
-    {'period': diff['period'], route: diff.get(route, {}).get('wsDiff', 0) for route in ['TD3C', 'TD20', 'TC2', 'TC14']}
+    {'period': diff['period'], **{route: diff.get(route, {}).get('wsDiff', 0) for route in ['TD3C', 'TD20', 'TC2', 'TC14']}}
     for diff in bar_data
 ])
 fig_bar = px.bar(bar_df, x='period', y=['TD3C', 'TD20', 'TC2', 'TC14'], barmode='group', title="WS Changes by Route")
