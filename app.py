@@ -25,7 +25,7 @@ def load_data():
             entry = {'period': period}
             for route in routes:
                 ws_col = route
-                mt_col = f"{route}__1"  # Adjust based on CSV header for $/MT
+                mt_col = f"{route}__1"  # Adjust to f"{route}_$/MT" if CSV headers use TD3C_$/MT
                 if ws_col in oct_df.columns and mt_col in oct_df.columns:
                     ws = pd.to_numeric(oct_df.loc[period, ws_col], errors='coerce')
                     mt = pd.to_numeric(oct_df.loc[period, mt_col], errors='coerce')
@@ -38,8 +38,8 @@ def load_data():
             entry = {'period': period}
             for route in routes:
                 ws_col = route
-                mt_col = f"{route}__1"
-                if ws_col in nov_df.columns and mt_col in nov_df.columns:
+                mt_col = f"{route}__1"  # Adjust to f"{route}_$/MT" if CSV headers use TD3C_$/MT
+                if ws_col in oct_df.columns and mt_col in oct_df.columns:
                     ws = pd.to_numeric(nov_df.loc[period, ws_col], errors='coerce')
                     mt = pd.to_numeric(nov_df.loc[period, mt_col], errors='coerce')
                     if pd.notnull(ws) and pd.notnull(mt):
