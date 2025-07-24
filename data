@@ -1,0 +1,7 @@
+oil-market-report/
+├── app.py
+├── requirements.txt
+├── README.md
+├── data/
+│   ├── "C:\Users\RawsonMacNeill\Downloads\data\Oil Brokerage Forward Curves 10.06 (1).csv"
+│   ├── "C:\Users\RawsonMacNeill\Downloads\data\Oil Brokerage Forward Curves 11.06 (2).csv"
