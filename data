@@ -1,7 +1,7 @@
-oil-market-report/
+Forward-web-app/
 ├── app.py
 ├── requirements.txt
 ├── README.md
 ├── data/
-│   ├── "C:\Users\RawsonMacNeill\Downloads\data\Oil Brokerage Forward Curves 10.06 (1).csv"
-│   ├── "C:\Users\RawsonMacNeill\Downloads\data\Oil Brokerage Forward Curves 11.06 (2).csv"
+│   ├── 10_06_2025.csv
+│   ├── 11_06_2025.csv
