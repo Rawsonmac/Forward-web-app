@@ -173,6 +173,49 @@ for diff, oct_row, nov_row in zip(compute_differences(oct_data, nov_data), oct_d
                 '$/MT Change': format_number(diff[route]['mtDiff'])
             })
 st.dataframe(pd.DataFrame(table_data), use_container_width=True)
+# --------------------------
+# Profit and Credits Section
+# --------------------------
+st.header("Net Profit and Credit Earnings")
+
+with st.form("profit_calc_form"):
+    st.subheader("Input Parameters")
+    blend_volume = st.number_input("Blend Volume (gallons)", min_value=0.0, value=100000.0, step=1000.0)
+    sale_price = st.number_input("Sale Price ($/gal)", min_value=0.0, value=2.80)
+    feedstock_cost = st.number_input("Feedstock Cost ($/gal)", min_value=0.0, value=2.20)
+    freight_cost = st.number_input("Freight Cost ($/gal)", min_value=0.0, value=0.15)
+    
+    st.markdown("**RIN Credit Parameters**")
+    rin_yield = st.number_input("RIN Yield (RINs/gal)", min_value=0.0, value=1.5)
+    rin_price = st.number_input("RIN Price ($/RIN)", min_value=0.0, value=0.85)
+
+    st.markdown("**LCFS Credit Parameters**")
+    ci_baseline = st.number_input("CI Baseline (gCO2e/MJ)", min_value=0.0, value=93.0)
+    ci_blend = st.number_input("CI of Blend (gCO2e/MJ)", min_value=0.0, value=60.0)
+    lcfs_price = st.number_input("LCFS Credit Price ($/ton)", min_value=0.0, value=80.0)
+    energy_density = st.number_input("Energy Density (MJ/gal)", min_value=0.0, value=75.0)
+
+    submitted = st.form_submit_button("Calculate Profit")
+
+if submitted:
+    # RIN earnings
+    rin_credits = blend_volume * rin_yield
+    rin_value = rin_credits * rin_price
+
+    # LCFS earnings
+    lcfs_credits = blend_volume * (ci_baseline - ci_blend) / 1000 * energy_density
+    lcfs_value = lcfs_credits * lcfs_price
+
+    # Total profit
+    gross_revenue = blend_volume * sale_price
+    total_cost = blend_volume * (feedstock_cost + freight_cost)
+    net_profit = gross_revenue - total_cost + rin_value + lcfs_value
+
+    st.subheader("Results")
+    st.write(f"🔹 **RIN Credits Earned**: {rin_credits:,.0f} credits worth ${rin_value:,.2f}")
+    st.write(f"🔹 **LCFS Credits Earned**: {lcfs_credits:,.0f} credits worth ${lcfs_value:,.2f}")
+    st.write(f"💰 **Net Profit**: ${net_profit:,.2f}")
+
 
 # Conclusion
 st.header("Conclusion")
